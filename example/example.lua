@@ -28,6 +28,12 @@ function serialize(obj)
 	return lua  
 end
 
+function closureWithCat(aCat)
+	callback = function(param)
+		return param + aCat:getAge()
+	end
+	return callback
+end
 
 function testAwesomeCat()
 	local a = AwesomeCat.new ("BINGO")
@@ -45,6 +51,12 @@ function testAwesomeCat()
 	if not WITHOUT_CPP_STDLIB then
 		print(a:testFunctor1(99999, 88888))
 		print(a:testFunctor2(77777, 66666))
+		callback = closureWithCat(a)
+		print("Test callback with age " .. a:getAge())
+		a:testfunctor(callback)
+		a:setAge(10)
+		print("Test callback with age " .. a:getAge())
+		a:testfunctor(callback)
 	end
 end
 
